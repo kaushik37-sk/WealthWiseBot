@@ -1,52 +1,21 @@
-// Smooth Scroll for Navbar Links
-document.querySelectorAll('.navbar .nav-links a').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
-});
-
-// Scroll to top button functionality
-const scrollToTopBtn = document.createElement('button');
-scrollToTopBtn.textContent = '↑';
-scrollToTopBtn.classList.add('scroll-to-top');
-document.body.appendChild(scrollToTopBtn);
-
-// Show button when scrolling
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        scrollToTopBtn.style.display = 'block';
-    } else {
-        scrollToTopBtn.style.display = 'none';
-    }
-});
-
-// Scroll to top functionality
-scrollToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Example of dynamic visitor count functionality (this could be improved or customized further)
+// Function to get the count from localStorage or initialize it
 function getVisitorCount() {
-    let count = localStorage.getItem('visitorCount') || 0;
-    return parseInt(count);
+  return localStorage.getItem('visitorCount') || 0;
 }
 
+// Function to increment and save the count
 function incrementVisitorCount() {
-    let count = getVisitorCount() + 1;
-    localStorage.setItem('visitorCount', count);
-    return count;
+  let count = parseInt(getVisitorCount()) + 1;
+  localStorage.setItem('visitorCount', count);
+  return count;
 }
 
-function updateVisitorCountDisplay() {
-    const visitorCountDisplay = document.querySelector('.visitor-count-display');
-    visitorCountDisplay.textContent = `Visitors: ${incrementVisitorCount()}`;
+// Function to display the count
+function displayVisitorCount() {
+  const counterElement = document.querySelector('.website-counter');
+  const count = incrementVisitorCount();
+  counterElement.textContent = count;
 }
 
-document.addEventListener('DOMContentLoaded', updateVisitorCountDisplay);
-
+// Call the display function when the page loads
+document.addEventListener('DOMContentLoaded', displayVisitorCount);
